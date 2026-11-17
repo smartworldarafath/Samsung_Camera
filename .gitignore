@@ -1,0 +1,21 @@
+# Build intermediates & caches
+decompiled/build/
+decompiled/dist/
+*_unsigned.apk
+*_aligned.apk
+*.idsig
+*.log
+__pycache__/
+*.py[cod]
+
+# Secrets, credentials & signing keys
+.env
+.env.*
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+credentials.json
+google-services.json
+local.properties
