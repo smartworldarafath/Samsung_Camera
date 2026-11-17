@@ -1,0 +1,17 @@
+.class public interface abstract LW4/b;
+.super Ljava/lang/Object;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+
+# virtual methods
+.method public abstract a()Ljava/util/Map;
+.end method
+
+.method public abstract b()Lu5/c;
+.end method
+
+.method public abstract getSource()LV4/Q;
+.end method
+
+.method public abstract getType()LL5/w;
+.end method

@@ -1,0 +1,155 @@
+.class public final synthetic Landroidx/activity/result/a;
+.super Ljava/lang/Object;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+# interfaces
+.implements Landroidx/activity/result/ActivityResultCallback;
+.implements Landroidx/compose/ui/graphics/colorspace/DoubleFunction;
+
+
+# instance fields
+.field public final synthetic a:I
+
+.field public final synthetic b:LF4/k;
+
+
+# direct methods
+.method public synthetic constructor <init>(LF4/k;I)V
+    .locals 0
+
+    .line 1
+    iput p2, p0, Landroidx/activity/result/a;->a:I
+
+    .line 2
+    .line 3
+    iput-object p1, p0, Landroidx/activity/result/a;->b:LF4/k;
+
+    .line 4
+    .line 5
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 6
+    .line 7
+    .line 8
+    return-void
+.end method
+
+
+# virtual methods
+.method public invoke(D)D
+    .locals 1
+
+    .line 1
+    iget v0, p0, Landroidx/activity/result/a;->a:I
+
+    .line 2
+    .line 3
+    iget-object p0, p0, Landroidx/activity/result/a;->b:LF4/k;
+
+    .line 4
+    .line 5
+    packed-switch v0, :pswitch_data_0
+
+    .line 6
+    .line 7
+    .line 8
+    invoke-static {p0, p1, p2}, Landroidx/compose/ui/graphics/colorspace/Rgb;->c(LF4/k;D)D
+
+    .line 9
+    .line 10
+    .line 11
+    move-result-wide p0
+
+    .line 12
+    return-wide p0
+
+    .line 13
+    :pswitch_0
+    invoke-static {p0, p1, p2}, Landroidx/compose/ui/graphics/colorspace/Rgb;->m(LF4/k;D)D
+
+    .line 14
+    .line 15
+    .line 16
+    move-result-wide p0
+
+    .line 17
+    return-wide p0
+
+    .line 18
+    :pswitch_1
+    invoke-static {p0, p1, p2}, Landroidx/compose/ui/graphics/colorspace/Rgb;->k(LF4/k;D)D
+
+    .line 19
+    .line 20
+    .line 21
+    move-result-wide p0
+
+    .line 22
+    return-wide p0
+
+    .line 23
+    :pswitch_2
+    invoke-static {p0, p1, p2}, Landroidx/compose/ui/graphics/colorspace/Rgb;->f(LF4/k;D)D
+
+    .line 24
+    .line 25
+    .line 26
+    move-result-wide p0
+
+    .line 27
+    return-wide p0
+
+    .line 28
+    nop
+
+    .line 29
+    :pswitch_data_0
+    .packed-switch 0x2
+        :pswitch_2
+        :pswitch_1
+        :pswitch_0
+    .end packed-switch
+.end method
+
+.method public onActivityResult(Ljava/lang/Object;)V
+    .locals 1
+
+    .line 1
+    iget v0, p0, Landroidx/activity/result/a;->a:I
+
+    .line 2
+    .line 3
+    iget-object p0, p0, Landroidx/activity/result/a;->b:LF4/k;
+
+    .line 4
+    .line 5
+    packed-switch v0, :pswitch_data_0
+
+    .line 6
+    .line 7
+    .line 8
+    invoke-static {p0, p1}, Landroidx/activity/result/ActivityResultCallerKt;->b(LF4/k;Ljava/lang/Object;)V
+
+    .line 9
+    .line 10
+    .line 11
+    return-void
+
+    .line 12
+    :pswitch_0
+    invoke-static {p0, p1}, Landroidx/activity/result/ActivityResultCallerKt;->a(LF4/k;Ljava/lang/Object;)V
+
+    .line 13
+    .line 14
+    .line 15
+    return-void
+
+    .line 16
+    nop
+
+    .line 17
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_0
+    .end packed-switch
+.end method

@@ -1,0 +1,81 @@
+.class Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter$2;
+.super Landroid/speech/tts/UtteranceProgressListener;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;->onAccessibilityAutoCaptureRequested(ILjava/lang/String;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic this$0:Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;
+
+
+# direct methods
+.method public constructor <init>(Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter$2;->this$0:Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;
+
+    .line 2
+    .line 3
+    invoke-direct {p0}, Landroid/speech/tts/UtteranceProgressListener;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    return-void
+.end method
+
+
+# virtual methods
+.method public onDone(Ljava/lang/String;)V
+    .locals 1
+
+    .line 1
+    iget-object p1, p0, Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter$2;->this$0:Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;
+
+    .line 2
+    .line 3
+    sget-object v0, Lcom/sec/android/app/camera/interfaces/CameraContext$InputType;->FACE_CENTER_DETECTED:Lcom/sec/android/app/camera/interfaces/CameraContext$InputType;
+
+    .line 4
+    .line 5
+    invoke-virtual {p1, v0}, Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;->onShutterButtonClick(Lcom/sec/android/app/camera/interfaces/CameraContext$InputType;)Z
+
+    .line 6
+    .line 7
+    .line 8
+    iget-object p0, p0, Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter$2;->this$0:Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;
+
+    .line 9
+    .line 10
+    invoke-static {p0}, Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;->f(Lcom/sec/android/app/camera/shootingmode/abstraction/AbstractShootingModePresenter;)V
+
+    .line 11
+    .line 12
+    .line 13
+    return-void
+.end method
+
+.method public onError(Ljava/lang/String;)V
+    .locals 0
+
+    .line 1
+    return-void
+.end method
+
+.method public onStart(Ljava/lang/String;)V
+    .locals 0
+
+    .line 1
+    return-void
+.end method

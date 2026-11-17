@@ -1,0 +1,44 @@
+.class public final LU5/c;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements LF4/o;
+
+
+# static fields
+.field public static final a:LU5/c;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 1
+    new-instance v0, LU5/c;
+
+    .line 2
+    .line 3
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    sput-object v0, LU5/c;->a:LU5/c;
+
+    .line 7
+    .line 8
+    return-void
+.end method
+
+
+# virtual methods
+.method public final invoke(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    .line 1
+    sget-object p0, Lr4/o;->a:Lr4/o;
+
+    .line 2
+    .line 3
+    return-object p0
+.end method

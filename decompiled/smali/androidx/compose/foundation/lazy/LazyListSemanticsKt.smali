@@ -1,0 +1,194 @@
+.class public final Landroidx/compose/foundation/lazy/LazyListSemanticsKt;
+.super Ljava/lang/Object;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+
+# annotations
+.annotation runtime Lkotlin/Metadata;
+    d1 = {
+        "\u0000\u0016\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000b\n\u0002\u0008\u0002\u001a\u001d\u0010\u0000\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u0005H\u0001\u00a2\u0006\u0002\u0010\u0006\u00a8\u0006\u0007"
+    }
+    d2 = {
+        "rememberLazyListSemanticState",
+        "Landroidx/compose/foundation/lazy/layout/LazyLayoutSemanticState;",
+        "state",
+        "Landroidx/compose/foundation/lazy/LazyListState;",
+        "isVertical",
+        "",
+        "(Landroidx/compose/foundation/lazy/LazyListState;ZLandroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/lazy/layout/LazyLayoutSemanticState;",
+        "foundation_release"
+    }
+    k = 0x2
+    mv = {
+        0x1,
+        0x8,
+        0x0
+    }
+    xi = 0x30
+.end annotation
+
+
+# direct methods
+.method public static final rememberLazyListSemanticState(Landroidx/compose/foundation/lazy/LazyListState;ZLandroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/lazy/layout/LazyLayoutSemanticState;
+    .locals 3
+
+    .line 1
+    const-string/jumbo v0, "state"
+
+    .line 2
+    .line 3
+    .line 4
+    invoke-static {p0, v0}, Lkotlin/jvm/internal/p;->e(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 5
+    .line 6
+    .line 7
+    const v0, 0x2388e847
+
+    .line 8
+    .line 9
+    .line 10
+    invoke-interface {p2, v0}, Landroidx/compose/runtime/Composer;->startReplaceableGroup(I)V
+
+    .line 11
+    .line 12
+    .line 13
+    invoke-static {}, Landroidx/compose/runtime/ComposerKt;->isTraceInProgress()Z
+
+    .line 14
+    .line 15
+    .line 16
+    move-result v1
+
+    .line 17
+    if-eqz v1, :cond_0
+
+    .line 18
+    .line 19
+    const/4 v1, -0x1
+
+    .line 20
+    const-string v2, "androidx.compose.foundation.lazy.rememberLazyListSemanticState (LazyListSemantics.kt:23)"
+
+    .line 21
+    .line 22
+    invoke-static {v0, p3, v1, v2}, Landroidx/compose/runtime/ComposerKt;->traceEventStart(IIILjava/lang/String;)V
+
+    .line 23
+    .line 24
+    .line 25
+    :cond_0
+    invoke-static {p1}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    .line 26
+    .line 27
+    .line 28
+    move-result-object p3
+
+    .line 29
+    const v0, 0x1e7b2b64
+
+    .line 30
+    .line 31
+    .line 32
+    invoke-interface {p2, v0}, Landroidx/compose/runtime/Composer;->startReplaceableGroup(I)V
+
+    .line 33
+    .line 34
+    .line 35
+    invoke-interface {p2, p0}, Landroidx/compose/runtime/Composer;->changed(Ljava/lang/Object;)Z
+
+    .line 36
+    .line 37
+    .line 38
+    move-result v0
+
+    .line 39
+    invoke-interface {p2, p3}, Landroidx/compose/runtime/Composer;->changed(Ljava/lang/Object;)Z
+
+    .line 40
+    .line 41
+    .line 42
+    move-result p3
+
+    .line 43
+    or-int/2addr p3, v0
+
+    .line 44
+    invoke-interface {p2}, Landroidx/compose/runtime/Composer;->rememberedValue()Ljava/lang/Object;
+
+    .line 45
+    .line 46
+    .line 47
+    move-result-object v0
+
+    .line 48
+    if-nez p3, :cond_1
+
+    .line 49
+    .line 50
+    sget-object p3, Landroidx/compose/runtime/Composer;->Companion:Landroidx/compose/runtime/Composer$Companion;
+
+    .line 51
+    .line 52
+    invoke-virtual {p3}, Landroidx/compose/runtime/Composer$Companion;->getEmpty()Ljava/lang/Object;
+
+    .line 53
+    .line 54
+    .line 55
+    move-result-object p3
+
+    .line 56
+    if-ne v0, p3, :cond_2
+
+    .line 57
+    .line 58
+    :cond_1
+    invoke-static {p0, p1}, Landroidx/compose/foundation/lazy/layout/LazyLayoutSemanticStateKt;->LazyLayoutSemanticState(Landroidx/compose/foundation/lazy/LazyListState;Z)Landroidx/compose/foundation/lazy/layout/LazyLayoutSemanticState;
+
+    .line 59
+    .line 60
+    .line 61
+    move-result-object v0
+
+    .line 62
+    invoke-interface {p2, v0}, Landroidx/compose/runtime/Composer;->updateRememberedValue(Ljava/lang/Object;)V
+
+    .line 63
+    .line 64
+    .line 65
+    :cond_2
+    invoke-interface {p2}, Landroidx/compose/runtime/Composer;->endReplaceableGroup()V
+
+    .line 66
+    .line 67
+    .line 68
+    check-cast v0, Landroidx/compose/foundation/lazy/layout/LazyLayoutSemanticState;
+
+    .line 69
+    .line 70
+    invoke-static {}, Landroidx/compose/runtime/ComposerKt;->isTraceInProgress()Z
+
+    .line 71
+    .line 72
+    .line 73
+    move-result p0
+
+    .line 74
+    if-eqz p0, :cond_3
+
+    .line 75
+    .line 76
+    invoke-static {}, Landroidx/compose/runtime/ComposerKt;->traceEventEnd()V
+
+    .line 77
+    .line 78
+    .line 79
+    :cond_3
+    invoke-interface {p2}, Landroidx/compose/runtime/Composer;->endReplaceableGroup()V
+
+    .line 80
+    .line 81
+    .line 82
+    return-object v0
+.end method

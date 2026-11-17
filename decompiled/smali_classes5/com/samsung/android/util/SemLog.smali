@@ -1,0 +1,67 @@
+.class public Lcom/samsung/android/util/SemLog;
+.super Ljava/lang/Object;
+.source "SemLog.java"
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    return-void
+.end method
+
+.method public static v(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 1
+
+    invoke-static {p0, p1}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v0
+    return v0
+.end method
+
+.method public static d(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 1
+
+    invoke-static {p0, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v0
+    return v0
+.end method
+
+.method public static i(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 1
+
+    invoke-static {p0, p1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v0
+    return v0
+.end method
+
+.method public static w(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 1
+
+    invoke-static {p0, p1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v0
+    return v0
+.end method
+
+.method public static e(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 1
+
+    invoke-static {p0, p1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v0
+    return v0
+.end method
+
+.method public static e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    .locals 1
+
+    invoke-static {p0, p1, p2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    move-result v0
+    return v0
+.end method
+
+.method public static wtf(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 1
+
+    invoke-static {p0, p1}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v0
+    return v0
+.end method

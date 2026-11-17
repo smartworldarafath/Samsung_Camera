@@ -1,0 +1,242 @@
+.class final Landroidx/compose/foundation/DefaultDebugIndication;
+.super Ljava/lang/Object;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+# interfaces
+.implements Landroidx/compose/foundation/Indication;
+
+
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroidx/compose/foundation/DefaultDebugIndication$DefaultDebugIndicationInstance;
+    }
+.end annotation
+
+.annotation runtime Lkotlin/Metadata;
+    d1 = {
+        "\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0008\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\u0008\u0003\u0008\u00c2\u0002\u0018\u00002\u00020\u0001:\u0001\u0008B\u0007\u0008\u0002\u00a2\u0006\u0002\u0010\u0002J\u0015\u0010\u0003\u001a\u00020\u00042\u0006\u0010\u0005\u001a\u00020\u0006H\u0017\u00a2\u0006\u0002\u0010\u0007\u00a8\u0006\t"
+    }
+    d2 = {
+        "Landroidx/compose/foundation/DefaultDebugIndication;",
+        "Landroidx/compose/foundation/Indication;",
+        "()V",
+        "rememberUpdatedInstance",
+        "Landroidx/compose/foundation/IndicationInstance;",
+        "interactionSource",
+        "Landroidx/compose/foundation/interaction/InteractionSource;",
+        "(Landroidx/compose/foundation/interaction/InteractionSource;Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/IndicationInstance;",
+        "DefaultDebugIndicationInstance",
+        "foundation_release"
+    }
+    k = 0x1
+    mv = {
+        0x1,
+        0x8,
+        0x0
+    }
+    xi = 0x30
+.end annotation
+
+
+# static fields
+.field public static final INSTANCE:Landroidx/compose/foundation/DefaultDebugIndication;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 1
+    new-instance v0, Landroidx/compose/foundation/DefaultDebugIndication;
+
+    .line 2
+    .line 3
+    invoke-direct {v0}, Landroidx/compose/foundation/DefaultDebugIndication;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    sput-object v0, Landroidx/compose/foundation/DefaultDebugIndication;->INSTANCE:Landroidx/compose/foundation/DefaultDebugIndication;
+
+    .line 7
+    .line 8
+    return-void
+.end method
+
+.method private constructor <init>()V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+
+# virtual methods
+.method public rememberUpdatedInstance(Landroidx/compose/foundation/interaction/InteractionSource;Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/IndicationInstance;
+    .locals 2
+
+    .line 1
+    const-string p0, "interactionSource"
+
+    .line 2
+    .line 3
+    const v0, 0x64593183
+
+    .line 4
+    .line 5
+    .line 6
+    invoke-static {p1, p0, p2, v0}, Landroidx/collection/a;->z(Landroidx/compose/foundation/interaction/InteractionSource;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)Z
+
+    .line 7
+    .line 8
+    .line 9
+    move-result p0
+
+    .line 10
+    if-eqz p0, :cond_0
+
+    .line 11
+    .line 12
+    const/4 p0, -0x1
+
+    .line 13
+    const-string v1, "androidx.compose.foundation.DefaultDebugIndication.rememberUpdatedInstance (Indication.kt:166)"
+
+    .line 14
+    .line 15
+    invoke-static {v0, p3, p0, v1}, Landroidx/compose/runtime/ComposerKt;->traceEventStart(IIILjava/lang/String;)V
+
+    .line 16
+    .line 17
+    .line 18
+    :cond_0
+    and-int/lit8 p0, p3, 0xe
+
+    .line 19
+    .line 20
+    invoke-static {p1, p2, p0}, Landroidx/compose/foundation/interaction/PressInteractionKt;->collectIsPressedAsState(Landroidx/compose/foundation/interaction/InteractionSource;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
+
+    .line 21
+    .line 22
+    .line 23
+    move-result-object p3
+
+    .line 24
+    invoke-static {p1, p2, p0}, Landroidx/compose/foundation/interaction/HoverInteractionKt;->collectIsHoveredAsState(Landroidx/compose/foundation/interaction/InteractionSource;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
+
+    .line 25
+    .line 26
+    .line 27
+    move-result-object v0
+
+    .line 28
+    invoke-static {p1, p2, p0}, Landroidx/compose/foundation/interaction/FocusInteractionKt;->collectIsFocusedAsState(Landroidx/compose/foundation/interaction/InteractionSource;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
+
+    .line 29
+    .line 30
+    .line 31
+    move-result-object p0
+
+    .line 32
+    const v1, 0x44faf204
+
+    .line 33
+    .line 34
+    .line 35
+    invoke-interface {p2, v1}, Landroidx/compose/runtime/Composer;->startReplaceableGroup(I)V
+
+    .line 36
+    .line 37
+    .line 38
+    invoke-interface {p2, p1}, Landroidx/compose/runtime/Composer;->changed(Ljava/lang/Object;)Z
+
+    .line 39
+    .line 40
+    .line 41
+    move-result p1
+
+    .line 42
+    invoke-interface {p2}, Landroidx/compose/runtime/Composer;->rememberedValue()Ljava/lang/Object;
+
+    .line 43
+    .line 44
+    .line 45
+    move-result-object v1
+
+    .line 46
+    if-nez p1, :cond_1
+
+    .line 47
+    .line 48
+    sget-object p1, Landroidx/compose/runtime/Composer;->Companion:Landroidx/compose/runtime/Composer$Companion;
+
+    .line 49
+    .line 50
+    invoke-virtual {p1}, Landroidx/compose/runtime/Composer$Companion;->getEmpty()Ljava/lang/Object;
+
+    .line 51
+    .line 52
+    .line 53
+    move-result-object p1
+
+    .line 54
+    if-ne v1, p1, :cond_2
+
+    .line 55
+    .line 56
+    :cond_1
+    new-instance v1, Landroidx/compose/foundation/DefaultDebugIndication$DefaultDebugIndicationInstance;
+
+    .line 57
+    .line 58
+    invoke-direct {v1, p3, v0, p0}, Landroidx/compose/foundation/DefaultDebugIndication$DefaultDebugIndicationInstance;-><init>(Landroidx/compose/runtime/State;Landroidx/compose/runtime/State;Landroidx/compose/runtime/State;)V
+
+    .line 59
+    .line 60
+    .line 61
+    invoke-interface {p2, v1}, Landroidx/compose/runtime/Composer;->updateRememberedValue(Ljava/lang/Object;)V
+
+    .line 62
+    .line 63
+    .line 64
+    :cond_2
+    invoke-interface {p2}, Landroidx/compose/runtime/Composer;->endReplaceableGroup()V
+
+    .line 65
+    .line 66
+    .line 67
+    check-cast v1, Landroidx/compose/foundation/DefaultDebugIndication$DefaultDebugIndicationInstance;
+
+    .line 68
+    .line 69
+    invoke-static {}, Landroidx/compose/runtime/ComposerKt;->isTraceInProgress()Z
+
+    .line 70
+    .line 71
+    .line 72
+    move-result p0
+
+    .line 73
+    if-eqz p0, :cond_3
+
+    .line 74
+    .line 75
+    invoke-static {}, Landroidx/compose/runtime/ComposerKt;->traceEventEnd()V
+
+    .line 76
+    .line 77
+    .line 78
+    :cond_3
+    invoke-interface {p2}, Landroidx/compose/runtime/Composer;->endReplaceableGroup()V
+
+    .line 79
+    .line 80
+    .line 81
+    return-object v1
+.end method

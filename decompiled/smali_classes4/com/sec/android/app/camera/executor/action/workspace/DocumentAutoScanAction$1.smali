@@ -1,0 +1,69 @@
+.class synthetic Lcom/sec/android/app/camera/executor/action/workspace/DocumentAutoScanAction$1;
+.super Ljava/lang/Object;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/sec/android/app/camera/executor/action/workspace/DocumentAutoScanAction;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1009
+    name = null
+.end annotation
+
+
+# static fields
+.field static final synthetic $SwitchMap$com$sec$android$app$camera$executor$action$ActionStateIds:[I
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 3
+
+    .line 1
+    invoke-static {}, Lcom/sec/android/app/camera/executor/action/ActionStateIds;->values()[Lcom/sec/android/app/camera/executor/action/ActionStateIds;
+
+    .line 2
+    .line 3
+    .line 4
+    move-result-object v0
+
+    .line 5
+    array-length v0, v0
+
+    .line 6
+    new-array v0, v0, [I
+
+    .line 7
+    .line 8
+    sput-object v0, Lcom/sec/android/app/camera/executor/action/workspace/DocumentAutoScanAction$1;->$SwitchMap$com$sec$android$app$camera$executor$action$ActionStateIds:[I
+
+    .line 9
+    .line 10
+    :try_start_0
+    sget-object v1, Lcom/sec/android/app/camera/executor/action/ActionStateIds;->STATE_ID_DOCUMENT_AUTO_SCAN:Lcom/sec/android/app/camera/executor/action/ActionStateIds;
+
+    .line 11
+    .line 12
+    invoke-virtual {v1}, Ljava/lang/Enum;->ordinal()I
+
+    .line 13
+    .line 14
+    .line 15
+    move-result v1
+
+    .line 16
+    const/4 v2, 0x1
+
+    .line 17
+    aput v2, v0, v1
+    :try_end_0
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 18
+    .line 19
+    :catch_0
+    return-void
+.end method

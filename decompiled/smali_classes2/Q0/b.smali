@@ -1,0 +1,135 @@
+.class public final LQ0/b;
+.super LQ0/c;
+.source "r8-map-id-aa6f1b291c3c61cfcd6789b6e7a5a9eb2a9a1dbb0191cdf7809940f7831e7f21"
+
+
+# virtual methods
+.method public final c()I
+    .locals 0
+
+    .line 1
+    const p0, 0x7f070bf1
+
+    .line 2
+    .line 3
+    .line 4
+    return p0
+.end method
+
+.method public final d(Landroid/content/res/Resources;I)I
+    .locals 0
+
+    .line 1
+    const-string p0, "resources"
+
+    .line 2
+    .line 3
+    invoke-static {p1, p0}, Lkotlin/jvm/internal/p;->e(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 4
+    .line 5
+    .line 6
+    const/4 p0, 0x1
+
+    .line 7
+    if-eq p2, p0, :cond_1
+
+    .line 8
+    .line 9
+    const/4 p0, 0x2
+
+    .line 10
+    if-eq p2, p0, :cond_0
+
+    .line 11
+    .line 12
+    const p0, 0x7f070bf0
+
+    .line 13
+    .line 14
+    .line 15
+    goto :goto_0
+
+    .line 16
+    :cond_0
+    const p0, 0x7f070bef
+
+    .line 17
+    .line 18
+    .line 19
+    goto :goto_0
+
+    .line 20
+    :cond_1
+    const p0, 0x7f070bee
+
+    .line 21
+    .line 22
+    .line 23
+    :goto_0
+    invoke-virtual {p1, p0}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
+
+    .line 24
+    .line 25
+    .line 26
+    move-result p0
+
+    .line 27
+    return p0
+.end method
+
+.method public final f()I
+    .locals 0
+
+    .line 1
+    const/4 p0, -0x1
+
+    .line 2
+    return p0
+.end method
+
+.method public final h()I
+    .locals 0
+
+    .line 1
+    const p0, 0x7f070a27
+
+    .line 2
+    .line 3
+    .line 4
+    return p0
+.end method
+
+.method public final i()I
+    .locals 0
+
+    .line 1
+    const p0, 0x7f070a21
+
+    .line 2
+    .line 3
+    .line 4
+    return p0
+.end method
+
+.method public final j()I
+    .locals 0
+
+    .line 1
+    const p0, 0x7f070a22
+
+    .line 2
+    .line 3
+    .line 4
+    return p0
+.end method
+
+.method public final k()Z
+    .locals 0
+
+    .line 1
+    const/4 p0, 0x1
+
+    .line 2
+    return p0
+.end method
