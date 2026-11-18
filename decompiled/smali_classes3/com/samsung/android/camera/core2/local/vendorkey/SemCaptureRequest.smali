@@ -3095,6 +3095,8 @@
     .line 19
     :cond_1
     :try_start_0
+    invoke-static {p0, p2, p3}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->applyVivoZoomIfNeeded(Landroid/hardware/camera2/CaptureRequest$Builder;Landroid/hardware/camera2/CaptureRequest$Key;Ljava/lang/Object;)V
+
     invoke-virtual {p0, p2, p3}, Landroid/hardware/camera2/CaptureRequest$Builder;->set(Landroid/hardware/camera2/CaptureRequest$Key;Ljava/lang/Object;)V
 
     .line 20
@@ -3159,51 +3161,6 @@
 
     .line 47
     :goto_1
-    new-instance p1, Ljava/lang/StringBuilder;
-
-    .line 48
-    .line 49
-    const-string p3, "UnsupportedOperationException - "
-
-    .line 50
-    .line 51
-    invoke-direct {p1, p3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    .line 52
-    .line 53
-    .line 54
-    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    .line 55
-    .line 56
-    .line 57
-    const-string p2, " is not supported - "
-
-    .line 58
-    .line 59
-    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    .line 60
-    .line 61
-    .line 62
-    invoke-virtual {p1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    .line 63
-    .line 64
-    .line 65
-    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    .line 66
-    .line 67
-    .line 68
-    move-result-object p0
-
-    .line 69
-    invoke-static {v0, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 70
-    .line 71
-    .line 72
     return-void
 .end method
 

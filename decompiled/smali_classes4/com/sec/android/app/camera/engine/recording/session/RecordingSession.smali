@@ -5303,6 +5303,16 @@
     .line 229
     move-result v2
 
+    iget-object v4, p0, Lcom/sec/android/app/camera/engine/recording/session/RecordingSession;->mMediaRecorderProfile:Lcom/sec/android/app/camera/engine/recording/session/MediaRecorderProfile$Profile;
+
+    invoke-virtual {v4}, Lcom/sec/android/app/camera/engine/recording/session/MediaRecorderProfile$Profile;->getVideoWidth()I
+
+    move-result v4
+
+    invoke-static {v4, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafeVideoFps(II)I
+
+    move-result v2
+
     .line 230
     invoke-virtual {v0, v2}, Landroid/media/MediaRecorder;->setVideoFrameRate(I)V
 
@@ -5384,6 +5394,16 @@
     .line 269
     .line 270
     move-result v4
+
+    invoke-static {v2, v4}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafeVideoWidth(II)I
+
+    move-result v6
+
+    invoke-static {v2, v4}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafeVideoHeight(II)I
+
+    move-result v4
+
+    move v2, v6
 
     .line 271
     invoke-virtual {v0, v2, v4}, Landroid/media/MediaRecorder;->setVideoSize(II)V

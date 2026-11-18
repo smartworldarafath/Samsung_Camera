@@ -7053,7 +7053,7 @@
 
     .line 22
     .line 23
-    const-wide/16 v1, 0x1388
+    const-wide/16 v1, 0x96
 
     .line 24
     .line 25
@@ -7094,7 +7094,7 @@
 
     .line 13
     .line 14
-    const-wide/16 v1, 0x1388
+    const-wide/16 v1, 0x96
 
     .line 15
     .line 16

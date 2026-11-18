@@ -1812,6 +1812,23 @@
 
     .line 9
     :cond_0
+    sget-object v0, Lcom/sec/android/app/camera/interfaces/CommandId;->SHOOTING_MODE_BIXBY_VISION:Lcom/sec/android/app/camera/interfaces/CommandId;
+    if-ne p1, v0, :cond_not_bixby
+    iget-object v0, p0, Lcom/sec/android/app/camera/shootingmode/more/gridlist/MoreGridListPresenter;->mCameraContext:Lcom/sec/android/app/camera/interfaces/CameraContext;
+    invoke-static {v0}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->handleBixbyVisionClick(Lcom/sec/android/app/camera/interfaces/CameraContext;)V
+    return-void
+    :cond_not_bixby
+    sget-object v0, Lcom/sec/android/app/camera/interfaces/CommandId;->SHOOTING_MODE_DUAL_RECORDING_V2:Lcom/sec/android/app/camera/interfaces/CommandId;
+    if-eq p1, v0, :cond_do_dual_toast
+    sget-object v0, Lcom/sec/android/app/camera/interfaces/CommandId;->SHOOTING_MODE_DUAL_RECORDING:Lcom/sec/android/app/camera/interfaces/CommandId;
+    if-eq p1, v0, :cond_do_dual_toast
+    sget-object v0, Lcom/sec/android/app/camera/interfaces/CommandId;->SHOOTING_MODE_MULTI_RECORDING:Lcom/sec/android/app/camera/interfaces/CommandId;
+    if-ne p1, v0, :cond_not_dual
+    :cond_do_dual_toast
+    iget-object v0, p0, Lcom/sec/android/app/camera/shootingmode/more/gridlist/MoreGridListPresenter;->mCameraContext:Lcom/sec/android/app/camera/interfaces/CameraContext;
+    invoke-static {v0}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->handleDualRecClick(Lcom/sec/android/app/camera/interfaces/CameraContext;)V
+    return-void
+    :cond_not_dual
     iget v0, p0, Lcom/sec/android/app/camera/shootingmode/more/gridlist/MoreGridListPresenter;->mCurrentShootingMode:I
 
     .line 10

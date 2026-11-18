@@ -5325,9 +5325,9 @@
     .line 43
     check-cast v0, Lcom/sec/android/app/camera/shootingmode/ShootingModeProviderImpl$Builder;
 
-    .line 44
-    .line 45
-    invoke-static {v0}, Ljava/util/Objects;->requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;
+    if-nez v0, :cond_has_builder
+    return-void
+    :cond_has_builder
 
     .line 46
     .line 47

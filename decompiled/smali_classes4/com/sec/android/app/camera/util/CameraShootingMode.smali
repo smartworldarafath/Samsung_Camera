@@ -812,18 +812,10 @@
 
     .line 96
     .line 97
+    const/4 v1, 0x1
     sget-object v0, LO1/k;->SHOOTING_MODE_EXPERT_RAW:LO1/k;
-
-    .line 98
-    .line 99
     invoke-static {v0}, LC/e;->U(LO1/k;)Ljava/util/Map;
-
-    .line 100
-    .line 101
-    .line 102
     move-result-object v0
-
-    .line 103
     invoke-static {p0, v0, v3, v1}, Lcom/sec/android/app/camera/util/CameraShootingMode;->setEnable(Landroid/content/Context;Ljava/util/Map;Lcom/sec/android/app/camera/interfaces/CommandId;Z)V
 
     .line 104

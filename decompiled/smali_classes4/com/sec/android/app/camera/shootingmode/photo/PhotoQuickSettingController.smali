@@ -78,10 +78,9 @@
     move-result p0
 
     .line 26
+    const/4 p0, 0x1
     if-ne p0, v1, :cond_0
 
-    .line 27
-    .line 28
     sget-object p0, Lcom/sec/android/app/camera/interfaces/CommandId;->BACK_CAMERA_PICTURE_SIZE_WITH_MEDIUM_MENU:Lcom/sec/android/app/camera/interfaces/CommandId;
 
     .line 29
@@ -130,10 +129,9 @@
     move-result p0
 
     .line 50
+    const/4 p0, 0x1
     if-ne p0, v1, :cond_2
 
-    .line 51
-    .line 52
     sget-object p0, Lcom/sec/android/app/camera/interfaces/CommandId;->BACK_CAMERA_PICTURE_SIZE_WITH_MEDIUM_MENU:Lcom/sec/android/app/camera/interfaces/CommandId;
 
     .line 53

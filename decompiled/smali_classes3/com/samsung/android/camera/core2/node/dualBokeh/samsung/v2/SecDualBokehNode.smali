@@ -887,8 +887,9 @@
     .line 6
     move-result-object v0
 
-    .line 7
-    invoke-static {v0}, Ljava/util/Objects;->requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;
+    if-nez v0, :cond_nonnull
+    return-void
+    :cond_nonnull
 
     .line 8
     .line 9

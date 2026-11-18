@@ -763,6 +763,10 @@
     .line 31
     move-result v4
 
+    invoke-static {v3, v4}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getProLensZoomLevel(Lcom/sec/android/app/camera/interfaces/CommandId;I)I
+
+    move-result v4
+
     .line 32
     invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 

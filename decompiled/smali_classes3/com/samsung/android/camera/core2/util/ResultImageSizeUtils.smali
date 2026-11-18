@@ -419,6 +419,14 @@
 .method public static getResultSize(Landroid/util/Size;Lcom/samsung/android/camera/core2/local/vendorkey/CaptureMetadata;Lcom/samsung/android/camera/core2/CamCapability;)Landroid/util/Size;
     .locals 4
 
+    const/4 v0, 0x0
+    if-eqz p2, :cond_safe_id
+    iget-object v0, p2, Lcom/samsung/android/camera/core2/CamCapability;->c:Ljava/lang/String;
+
+    :cond_safe_id
+    invoke-static {p0, v0}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafePictureSize(Landroid/util/Size;Ljava/lang/String;)Landroid/util/Size;
+    move-result-object p0
+
     .line 1
     invoke-static {p1}, Lcom/samsung/android/camera/core2/util/ResultImageSizeUtils;->isHighresUpscaleOff(Lcom/samsung/android/camera/core2/local/vendorkey/CaptureMetadata;)Z
 

@@ -7487,6 +7487,12 @@
     .line 23
     iget-object v2, p2, Lcom/samsung/android/camera/core2/container/PictureStreamInfo;->b:Landroid/util/Size;
 
+    iget-object v5, p0, Lcom/samsung/android/camera/core2/device/CamDeviceImpl;->l:Ljava/lang/String;
+
+    invoke-static {v2, v5}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafePictureSize(Landroid/util/Size;Ljava/lang/String;)Landroid/util/Size;
+
+    move-result-object v2
+
     .line 24
     .line 25
     iget v3, p2, Lcom/samsung/android/camera/core2/container/PictureStreamInfo;->e:I

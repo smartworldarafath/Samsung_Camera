@@ -3819,27 +3819,7 @@
 
     .line 9
     :cond_0
-    new-instance v0, LK2/a;
-
-    .line 10
-    .line 11
-    const/4 v1, 0x1
-
-    .line 12
-    invoke-direct {p0}, Lcom/sec/android/app/camera/layer/keyscreen/zoom/lenslist/ZoomLensListView;->getErrorDumpString()Ljava/lang/String;
-
-    .line 13
-    .line 14
-    .line 15
-    move-result-object p0
-
-    .line 16
-    invoke-direct {v0, v1, p0}, LK2/a;-><init>(ILjava/lang/String;)V
-
-    .line 17
-    .line 18
-    .line 19
-    throw v0
+    return-void
 .end method
 
 .method public static bridge synthetic w(Lcom/sec/android/app/camera/layer/keyscreen/zoom/lenslist/ZoomLensListView;)Lcom/sec/android/app/camera/layer/keyscreen/zoom/lenslist/ZoomLensListContract$LensListEventListener;

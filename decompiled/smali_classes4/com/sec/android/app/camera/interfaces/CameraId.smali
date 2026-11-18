@@ -936,6 +936,11 @@
     return p0
 
     .line 8
+    :pswitch_front
+    const/4 p0, 0x1
+
+    return p0
+
     :pswitch_5
     invoke-virtual {p0}, Lcom/sec/android/app/camera/interfaces/CameraId;->getId()I
 
@@ -959,11 +964,11 @@
     .packed-switch 0x0
         :pswitch_6
         :pswitch_5
-        :pswitch_5
-        :pswitch_5
-        :pswitch_5
-        :pswitch_5
-        :pswitch_5
+        :pswitch_6
+        :pswitch_6
+        :pswitch_front
+        :pswitch_6
+        :pswitch_6
         :pswitch_4
         :pswitch_3
         :pswitch_2

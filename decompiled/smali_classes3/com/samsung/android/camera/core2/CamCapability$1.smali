@@ -109,7 +109,7 @@
 
     .line 22
     .line 23
-    invoke-virtual {v2, v1}, Landroid/hardware/camera2/CameraManager;->getCameraCharacteristics(Ljava/lang/String;)Landroid/hardware/camera2/CameraCharacteristics;
+    invoke-static {v2, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafeCameraCharacteristics(Landroid/hardware/camera2/CameraManager;Ljava/lang/String;)Landroid/hardware/camera2/CameraCharacteristics;
 
     .line 24
     .line 25
@@ -360,7 +360,7 @@
 
     .line 64
     .line 65
-    invoke-virtual {v1, p1}, Landroid/hardware/camera2/CameraManager;->getCameraCharacteristics(Ljava/lang/String;)Landroid/hardware/camera2/CameraCharacteristics;
+    invoke-static {v1, p1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->getSafeCameraCharacteristics(Landroid/hardware/camera2/CameraManager;Ljava/lang/String;)Landroid/hardware/camera2/CameraCharacteristics;
 
     .line 66
     .line 67

@@ -1085,7 +1085,7 @@
 
     .line 37
     .line 38
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AI_HIGHRES_PHOTO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AUTO_BEAUTY_PHOTO:Ljava/lang/Class;
 
     .line 39
     .line 40
@@ -1117,7 +1117,7 @@
 
     .line 52
     .line 53
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_MID_HIGHRES_PHOTO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AUTO_BEAUTY_PHOTO:Ljava/lang/Class;
 
     .line 54
     .line 55
@@ -1179,7 +1179,7 @@
 
     .line 16
     .line 17
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_DUAL_RECORDING_VIDEO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_VIDEO:Ljava/lang/Class;
 
     .line 18
     .line 19
@@ -1305,7 +1305,7 @@
     .locals 0
 
     .line 1
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_MULTI_VIEW_VIDEO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_VIDEO:Ljava/lang/Class;
 
     .line 2
     .line 3
@@ -1383,7 +1383,7 @@
     .locals 0
 
     .line 1
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_MULTI_VIEW_VIDEO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_VIDEO:Ljava/lang/Class;
 
     .line 2
     .line 3
@@ -1394,7 +1394,7 @@
     .locals 0
 
     .line 1
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_DUAL_RECORDING_VIDEO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_VIDEO:Ljava/lang/Class;
 
     .line 2
     .line 3
@@ -1533,7 +1533,7 @@
 
     .line 28
     .line 29
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_MID_HIGHRES_PORTRAIT_ZOOM_PHOTO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AUTO_BEAUTY_PHOTO:Ljava/lang/Class;
 
     .line 30
     .line 31
@@ -1541,7 +1541,7 @@
 
     .line 32
     :cond_0
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_PORTRAIT_ZOOM_PHOTO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AUTO_BEAUTY_PHOTO:Ljava/lang/Class;
 
     .line 33
     .line 34
@@ -1549,7 +1549,7 @@
 
     .line 35
     :cond_1
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_SINGLE_BOKEH_PHOTO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AUTO_BEAUTY_PHOTO:Ljava/lang/Class;
 
     .line 36
     .line 37
@@ -1560,7 +1560,7 @@
     .locals 0
 
     .line 1
-    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_SINGLE_BOKEH_PHOTO:Ljava/lang/Class;
+    sget-object p0, Lcom/samsung/android/camera/core2/maker/MakerFactory;->MAKER_AUTO_BEAUTY_PHOTO:Ljava/lang/Class;
 
     .line 2
     .line 3
