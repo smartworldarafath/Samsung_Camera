@@ -2732,6 +2732,9 @@
     move-result-object v0
 
     .line 40
+    invoke-static {p1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->applySoftwareZoomIfNeeded(Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
+    move-result-object p1
+
     invoke-virtual {v0, p1}, Lcom/sec/android/app/camera/engine/capture/PictureSavingInfo$Builder;->setPicture(Ljava/nio/ByteBuffer;)Lcom/sec/android/app/camera/engine/capture/PictureSavingInfo$Builder;
 
     .line 41

@@ -473,6 +473,16 @@
     .line 11
     check-cast v0, Landroid/util/SparseArray;
 
+    if-nez v0, :cond_front_ok
+    sget-object v0, Lcom/sec/android/app/camera/util/ShootingModeMap;->FRONT_CAMERA_ID_LIST_MAP:Ljava/util/HashMap;
+    const/4 v1, 0x0
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    move-result-object v1
+    invoke-virtual {v0, v1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+    move-result-object v0
+    check-cast v0, Landroid/util/SparseArray;
+    :cond_front_ok
+
     .line 12
     .line 13
     new-instance v1, Ljava/lang/StringBuilder;

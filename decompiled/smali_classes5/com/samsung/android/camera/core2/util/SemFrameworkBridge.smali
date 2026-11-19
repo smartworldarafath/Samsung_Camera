@@ -1,8 +1,13 @@
 .class public Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;
 .super Ljava/lang/Object;
+.implements Ljava/lang/Runnable;
 .source "SemFrameworkBridge.java"
 
 .field private static sRecordingTimes:Ljava/util/Map;
+.field public static volatile sCurrentZoomRatio:F
+.field private static volatile sLastPreviewScale:F
+.field private static sPreviewViewRef:Ljava/lang/ref/WeakReference;
+.field private static sZoomUpdater:Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;
 
 .method public constructor <init>()V
     .locals 0
@@ -2746,8 +2751,43 @@
     return-object p0
 .end method
 
+.method public static setPreviewView(Landroid/view/View;)V
+    .locals 2
+    const/high16 v0, 0x3f800000    # 1.0f
+    sput v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sCurrentZoomRatio:F
+    sput v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sLastPreviewScale:F
+    if-eqz p0, :cond_null
+    new-instance v0, Ljava/lang/ref/WeakReference;
+    invoke-direct {v0, p0}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
+    sput-object v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sPreviewViewRef:Ljava/lang/ref/WeakReference;
+    return-void
+    :cond_null
+    const/4 v0, 0x0
+    sput-object v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sPreviewViewRef:Ljava/lang/ref/WeakReference;
+    return-void
+.end method
+
+.method public run()V
+    .locals 2
+    :try_start_0
+    sget-object v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sPreviewViewRef:Ljava/lang/ref/WeakReference;
+    if-eqz v0, :cond_end
+    invoke-virtual {v0}, Ljava/lang/ref/WeakReference;->get()Ljava/lang/Object;
+    move-result-object v0
+    check-cast v0, Landroid/view/View;
+    if-eqz v0, :cond_end
+    sget v1, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sLastPreviewScale:F
+    invoke-virtual {v0, v1}, Landroid/view/View;->setScaleX(F)V
+    invoke-virtual {v0, v1}, Landroid/view/View;->setScaleY(F)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    :catchall_0
+    :cond_end
+    return-void
+.end method
+
 .method public static applyVivoZoomIfNeeded(Landroid/hardware/camera2/CaptureRequest$Builder;Landroid/hardware/camera2/CaptureRequest$Key;Ljava/lang/Object;)V
-    .locals 3
+    .locals 5
 
     if-eqz p0, :cond_done
     if-eqz p1, :cond_done
@@ -2768,28 +2808,161 @@
     invoke-virtual {p2}, Ljava/lang/Float;->floatValue()F
     move-result v0
 
+    # Save real requested zoom (e.g. 1.0..100.0)
+    sput v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sCurrentZoomRatio:F
+
+    # Compute HAL zoom clamped to [1.0f, 10.0f]
+    move v3, v0
     const/high16 v1, 0x3f800000    # 1.0f
-    cmpg-float v2, v0, v1
+    cmpg-float v2, v3, v1
     if-gez v2, :cond_chk_max
-    move v0, v1
+    move v3, v1
 
     :cond_chk_max
     const/high16 v1, 0x41200000    # 10.0f
-    cmpl-float v2, v0, v1
+    cmpl-float v2, v3, v1
     if-lez v2, :cond_apply
-    move v0, v1
+    move v3, v1
 
     :cond_apply
     sget-object v1, Landroid/hardware/camera2/CaptureRequest;->CONTROL_ZOOM_RATIO:Landroid/hardware/camera2/CaptureRequest$Key;
-    invoke-static {v0}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
-    move-result-object v0
-    invoke-virtual {p0, v1, v0}, Landroid/hardware/camera2/CaptureRequest$Builder;->set(Landroid/hardware/camera2/CaptureRequest$Key;Ljava/lang/Object;)V
+    invoke-static {v3}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
+    move-result-object v2
+    invoke-virtual {p0, v1, v2}, Landroid/hardware/camera2/CaptureRequest$Builder;->set(Landroid/hardware/camera2/CaptureRequest$Key;Ljava/lang/Object;)V
+
+    # Compute extra preview scale beyond 10.0x: extra = clamp(rawZoom / 10.0f, 1.0f, 10.0f)
+    const/high16 v1, 0x41200000    # 10.0f
+    cmpl-float v2, v0, v1
+    if-lez v2, :cond_scale_one
+    div-float v4, v0, v1
+    cmpl-float v2, v4, v1
+    if-lez v2, :cond_chk_scale_chg
+    move v4, v1
+    goto :cond_chk_scale_chg
+
+    :cond_scale_one
+    const/high16 v4, 0x3f800000    # 1.0f
+
+    :cond_chk_scale_chg
+    sget v2, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sLastPreviewScale:F
+    cmpl-float v2, v4, v2
+    if-eqz v2, :cond_done
+    sput v4, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sLastPreviewScale:F
+
+    sget-object v2, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sPreviewViewRef:Ljava/lang/ref/WeakReference;
+    if-eqz v2, :cond_done
+    invoke-virtual {v2}, Ljava/lang/ref/WeakReference;->get()Ljava/lang/Object;
+    move-result-object v2
+    check-cast v2, Landroid/view/View;
+    if-eqz v2, :cond_done
+
+    sget-object v1, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sZoomUpdater:Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;
+    if-nez v1, :cond_post
+    new-instance v1, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;
+    invoke-direct {v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;-><init>()V
+    sput-object v1, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sZoomUpdater:Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;
+
+    :cond_post
+    invoke-virtual {v2, v1}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     :catchall_0
     :cond_done
     return-void
+.end method
+
+.method public static applySoftwareZoomIfNeeded(Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
+    .locals 10
+
+    if-nez p0, :cond_chk_z
+    return-object p0
+
+    :cond_chk_z
+    sget v0, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->sCurrentZoomRatio:F
+    const v1, 0x4120cccd    # 10.05f
+    cmpg-float v1, v0, v1
+    if-gtz v1, :cond_do_crop
+    return-object p0
+
+    :cond_do_crop
+    :try_start_0
+    const/high16 v1, 0x41200000    # 10.0f
+    div-float v0, v0, v1
+    cmpl-float v2, v0, v1
+    if-lez v2, :cond_ext_ok
+    move v0, v1
+
+    :cond_ext_ok
+    invoke-virtual {p0}, Ljava/nio/ByteBuffer;->duplicate()Ljava/nio/ByteBuffer;
+    move-result-object v1
+    invoke-virtual {v1}, Ljava/nio/ByteBuffer;->rewind()Ljava/nio/Buffer;
+    invoke-virtual {v1}, Ljava/nio/ByteBuffer;->remaining()I
+    move-result v2
+    new-array v3, v2, [B
+    invoke-virtual {v1, v3}, Ljava/nio/ByteBuffer;->get([B)Ljava/nio/ByteBuffer;
+
+    const/4 v4, 0x0
+    invoke-static {v3, v4, v2}, Landroid/graphics/BitmapFactory;->decodeByteArray([BII)Landroid/graphics/Bitmap;
+    move-result-object v4
+    if-nez v4, :cond_bmp_ok
+    return-object p0
+
+    :cond_bmp_ok
+    invoke-virtual {v4}, Landroid/graphics/Bitmap;->getWidth()I
+    move-result v5
+    invoke-virtual {v4}, Landroid/graphics/Bitmap;->getHeight()I
+    move-result v6
+
+    int-to-float v7, v5
+    div-float/2addr v7, v0
+    float-to-int v7, v7
+    const/16 v8, 0x20
+    if-ge v7, v8, :cond_cw_ok
+    move v7, v8
+
+    :cond_cw_ok
+    int-to-float v8, v6
+    div-float/2addr v8, v0
+    float-to-int v8, v8
+    const/16 v9, 0x20
+    if-ge v8, v9, :cond_ch_ok
+    move v8, v9
+
+    :cond_ch_ok
+    sub-int v2, v5, v7
+    div-int/lit8 v2, v2, 0x2
+    sub-int v3, v6, v8
+    div-int/lit8 v3, v3, 0x2
+
+    invoke-static {v4, v2, v3, v7, v8}, Landroid/graphics/Bitmap;->createBitmap(Landroid/graphics/Bitmap;IIII)Landroid/graphics/Bitmap;
+    move-result-object v2
+    invoke-virtual {v4}, Landroid/graphics/Bitmap;->recycle()V
+
+    const/4 v3, 0x1
+    invoke-static {v2, v5, v6, v3}, Landroid/graphics/Bitmap;->createScaledBitmap(Landroid/graphics/Bitmap;IIZ)Landroid/graphics/Bitmap;
+    move-result-object v3
+    if-eq v3, v2, :cond_no_rec
+    invoke-virtual {v2}, Landroid/graphics/Bitmap;->recycle()V
+
+    :cond_no_rec
+    new-instance v2, Ljava/io/ByteArrayOutputStream;
+    invoke-direct {v2}, Ljava/io/ByteArrayOutputStream;-><init>()V
+    sget-object v4, Landroid/graphics/Bitmap$CompressFormat;->JPEG:Landroid/graphics/Bitmap$CompressFormat;
+    const/16 v5, 0x5f
+    invoke-virtual {v3, v4, v5, v2}, Landroid/graphics/Bitmap;->compress(Landroid/graphics/Bitmap$CompressFormat;ILjava/io/OutputStream;)Z
+    invoke-virtual {v3}, Landroid/graphics/Bitmap;->recycle()V
+
+    invoke-virtual {v2}, Ljava/io/ByteArrayOutputStream;->toByteArray()[B
+    move-result-object v2
+    invoke-static {v2}, Ljava/nio/ByteBuffer;->wrap([B)Ljava/nio/ByteBuffer;
+    move-result-object v2
+    return-object v2
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    :catchall_0
+    return-object p0
 .end method
 
 .method public static getSafeVideoWidth(II)I
@@ -4056,10 +4229,6 @@
     const-string v1, "1920x1080"
     const-string v2, "3264x1836"
     invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X1080_100FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
     const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X1080_120FPS"
     const-string v1, "1920x1080"
     const-string v2, "3264x1836"
@@ -4068,19 +4237,7 @@
     const-string v1, "1920x1080"
     const-string v2, "3264x1836"
     invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X1080_25FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X1080_50FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
     const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X1080_60FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X1080_AUTO_FPS"
     const-string v1, "1920x1080"
     const-string v2, "3264x1836"
     invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
@@ -4093,14 +4250,6 @@
     const-string v2, "3264x1400"
     invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
     const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X824_24FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X824_25FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_1920X824_50FPS"
     const-string v1, "1920x824"
     const-string v2, "3264x1400"
     invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
@@ -4127,66 +4276,6 @@
     const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_2400X1080"
     const-string v1, "2400x1080"
     const-string v2, "2400x1080"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_2560X1440"
-    const-string v1, "1920x1080"
-    const-string v2, "2560x1440"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1644"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1644_24FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1644_25FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1644_50FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1644_60FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1648"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1648_24FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X1648_60FPS"
-    const-string v1, "1920x824"
-    const-string v2, "3264x1400"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X2160"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X2160_24FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X2160_25FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X2160_50FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X2160_60FPS"
-    const-string v1, "1920x1080"
-    const-string v2, "3264x1836"
-    invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    const-string v0, "FRONT_CAMCORDER_RESOLUTION_FEATURE_MAP_3840X2880"
-    const-string v1, "1920x1440"
-    const-string v2, "3264x2448"
     invoke-static {p0, v0, v1, v2}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putCamFeature(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
     const-string v0, "FRONT_CAMERA_RESOLUTION_HIGH_RESOLUTION"
     const-string v1, "8160x6120"
@@ -4234,6 +4323,57 @@
     const-string v1, "7680x3296"
     invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
     const-string v0, "SUPPORT_PRO_VIDEO_AUDIO_BLUETOOTH_MIC"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "FRONT_CAMERA_SENSOR_CROP_RESOLUTION_FULL_RATIO"
+    const-string v1, "2400x1080"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_DUAL_BOKEH_EFFECT"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_SINGLE_BOKEH_EFFECT"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_BOKEH_HDR_CAPTURE"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_BOKEH_LIGHTING"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_BOKEH_OBJECT_DETECTION"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_BOKEH_SCENE_DETECTION"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_BOKEH_TORCH_FLASH"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_NIGHT_BEAUTY"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_NIGHT_CAPTURE_STOP"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_NIGHT_CIRCLE_SCREEN_FLASH"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_NIGHT_SCREEN_FLASH"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_PHOTO_MAX_NIGHT_SHOT"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_HYPER_LAPSE_NIGHT"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_HYPER_LAPSE_NIGHT_AUTO"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_FRONT_HYPER_LAPSE_NIGHT"
+    const-string v1, "true"
+    invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
+    const-string v0, "SUPPORT_CAMERA_ASSISTANT_ADDITIONAL_MODE_NIGHT"
     const-string v1, "true"
     invoke-static {p0, v0, v1}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->putFeatureVal(Ljava/util/HashMap;Ljava/lang/String;Ljava/lang/String;)V
     const-string v0, "SemBridge"

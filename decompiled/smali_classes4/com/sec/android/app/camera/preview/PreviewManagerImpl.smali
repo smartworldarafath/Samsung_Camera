@@ -122,6 +122,8 @@
     .line 32
     iput-object p3, p0, Lcom/sec/android/app/camera/preview/PreviewManagerImpl;->mPreviewView:Landroid/view/View;
 
+    invoke-static {p3}, Lcom/samsung/android/camera/core2/util/SemFrameworkBridge;->setPreviewView(Landroid/view/View;)V
+
     .line 33
     .line 34
     new-instance p3, Lcom/sec/android/app/camera/preview/PreviewSurfaceManager;
