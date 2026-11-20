@@ -10,9 +10,10 @@ Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool sm
   - [CamCapability$1.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/CamCapability$1.smali) & [CameraId.smali](decompiled/smali_classes4/com/sec/android/app/camera/interfaces/CameraId.smali): Routed restricted system-only Samsung physical camera IDs (`20..24`) safely through `SemFrameworkBridge.getSafeCameraCharacteristics` to primary Rear (`"0"`) / Front (`"1"`) and mapped `samsung.android.scaler.zoomRatio` -> `CaptureRequest.CONTROL_ZOOM_RATIO`.
 - **High-Resolution (`24M` / `50M` / `200M`) & Fast Capture**:
   - [PhotoQuickSettingController.smali](decompiled/smali_classes4/com/sec/android/app/camera/shootingmode/photo/PhotoQuickSettingController.smali), [MakerBuilder.smali](decompiled/smali_classes4/com/sec/android/app/camera/engine/core/MakerBuilder.smali), & [ResultImageSizeUtils.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/util/ResultImageSizeUtils.smali): Enabled Rear `24M`/`50M`/`200M` and Front `50M` selector pills; routed high-res & Portrait makers via single-stream `MAKER_AUTO_BEAUTY_PHOTO` with HAL-safe picture size clamping (`4032x3024` Rear / `3264x2448` Front) so captures complete rapidly without HAL stream timeouts.
-- **Portrait & Portrait Video Multi-Focal Length**:
-  - [PortraitVideoZoomController.smali](decompiled/smali_classes4/com/sec/android/app/camera/shootingmode/portrait/PortraitVideoZoomController.smali): Added `3x` and `5x` shortcuts alongside `1x` & `2x` (`1x`/`2x`/`3x`/`5x` available in both Portrait and Portrait Video).
-  - [SecDualBokehNode.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/node/dualBokeh/samsung/v2/SecDualBokehNode.smali): Added null guard in `setEntryMode`.
+- **Real `10x–100x` Zoom & Aspect Ratios (`1:1`, `4:3`, `16:9`, `Full`)**:
+  - [SemFrameworkBridge.smali](decompiled/smali_classes5/com/samsung/android/camera/core2/util/SemFrameworkBridge.smali), [PreviewManagerImpl.smali](decompiled/smali_classes4/com/sec/android/app/camera/preview/PreviewManagerImpl.smali), & [PictureProcessor.smali](decompiled/smali_classes4/com/sec/android/app/camera/engine/capture/PictureProcessor.smali): Uses Camera2 `CONTROL_ZOOM_RATIO` for `1x–10x`, and scales live preview + center-crops saved JPEGs for `10x–100x`. Added all `FULL_RATIO` and `MEDIUM`/`HIGH`/`ULTRA_HIGH` ratio keys for Rear & Front.
+- **Portrait UI Layout & Multi-Focal Length**:
+  - [PortraitVideoZoomController.smali](decompiled/smali_classes4/com/sec/android/app/camera/shootingmode/portrait/PortraitVideoZoomController.smali), [SecDualBokehNode.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/node/dualBokeh/samsung/v2/SecDualBokehNode.smali), & [ShootingModeMap.smali](decompiled/smali_classes4/com/sec/android/app/camera/util/ShootingModeMap.smali): Enabled `1x`/`2x`/`3x`/`5x` in Portrait and Portrait Video, enabled `SUPPORT_DUAL_BOKEH_EFFECT` so the blur strength slider stays hidden until tapped (hiding the zoom bar like S24 Ultra), added `FrontCameraIdList` fallback for Front Portrait, and added null guard in `SecDualBokehNode.setEntryMode`.
 - **Pro & Pro Video Lens / Resolution Menus**:
   - [ProZoomController.smali](decompiled/smali_classes4/com/sec/android/app/camera/shootingmode/pro/ProZoomController.smali), [ProVideoZoomController.smali](decompiled/smali_classes4/com/sec/android/app/camera/shootingmode/pro/ProVideoZoomController.smali), & [ZoomLensListView.smali](decompiled/smali_classes4/com/sec/android/app/camera/layer/keyscreen/zoom/lenslist/ZoomLensListView.smali): Assigned distinct Pro lens zoom levels (`UW=0.6x`, `W=1x`, `T=3x`, `ST=5x`) and hardened `validateZoomLensDataList` so `PRO` and `PRO VIDEO` open with full lens & resolution/FPS menus (`8K`/`UHD`/`QHD`/`FHD` + `Auto`/`24`–`240fps`).
 - **`MORE` Modes & Safe Fallbacks**:
@@ -22,14 +23,15 @@ Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool sm
 
 ## Verified Modes (Vivo X90 Pro, Android 16)
 
-- `PHOTO` (`.6x`–`100x` zoom, `12M`/`24M`/`50M`/`200M` rear & `50M` front captures verified)
-- `PORTRAIT` (`1x`/`2x`/`3x`/`5x` focal lengths, photo capture verified) & `PORTRAIT VIDEO` (`1x`/`2x`/`3x`/`5x`)
-- `VIDEO` (`.6x`/`1x`/`3x`/`5x`, `8K`/`UHD`/`FHD`/`HD` rear & `UHD`/`QHD`/`FHD`/`HD` `24`–`120fps` front, `.mp4` saved & verified)
-- `PRO` & `PRO VIDEO` (`UW`/`W`/`T`/`ST` lenses, photo capture verified, `8K`/`UHD`/`QHD`/`FHD` `24`–`240fps` menu verified)
-- `NIGHT`, `FOOD`, `PANORAMA`, `SINGLE TAKE`, `SLOW MOTION`, `SUPER SLOW-MO`, `HYPERLAPSE`, `EXPERT RAW` (launch & preview with zero runtime crashes)
-- `DUAL REC` & `BIXBY VISION` (present in `MORE`, handled with safe toast fallback on non-Samsung HAL)
+- `PHOTO`: `.6x`–`100x` zoom (live + cropped JPEG beyond `10x`), `1:1`/`4:3`/`16:9`/`Full` ratios, `12M`/`24M`/`50M`/`200M` rear & `50M` front captures verified.
+- `PORTRAIT` & `PORTRAIT VIDEO`: `1x`/`2x`/`3x`/`5x` focal lengths, clean S24 Ultra effect toggle UI, photo & `.mp4` captures verified.
+- `VIDEO`: Rear `UHD` (`3840×2160` 4K `.mp4` verified) / `FHD` / `HD`, Front `FHD` / `HD` (`24`/`30`/`60`/`120` menu, `.mp4` verified).
+- `PRO` & `PRO VIDEO`: `UW`/`W`/`T`/`ST` lenses, photo & `.mp4` captures verified, `8K`/`UHD`/`QHD`/`FHD` `24`–`240fps` menu verified.
+- `NIGHT`, `FOOD`, `SLOW MOTION`, `HYPERLAPSE`: Photo/video captures saved & verified with zero crashes.
+- `PANORAMA`, `SINGLE TAKE`, `SUPER SLOW-MO`, `EXPERT RAW`: Launch & preview with zero runtime crashes.
+- `DUAL REC` & `BIXBY VISION`: Present in `MORE`, handled with safe toast fallback on non-Samsung HAL.
 
-> Note on auxiliary physical lenses: Vivo CameraService restricts auxiliary physical camera IDs to privileged/system callers; `.6x`/`1x`/`3x`/`5x`/`100x` zoom levels route safely via Camera2 `CONTROL_ZOOM_RATIO` on public cameras `"0"` and `"1"`.
+> **Hardware / OS notes (unrooted Vivo X90 Pro)**: Vivo's `CameraService` restricts auxiliary physical cameras (`2` Ultrawide, `3` Telephoto, `10` Logical Multi-Cam), `50MP` remosaic streams, and `60fps` normal video vendor tags to Vivo's system-signed stock camera app. Public Camera2 exposes Camera `"0"` (`4096×3072`, `[1.0–10.0x]`, `24/30fps` normal + `120/240/480fps` high-speed) and Camera `"1"` (`3264×2448`, `[1.0–4.0x]`). Samsung proprietary `/vendor/lib64/` native bokeh/ISP/Dual-Rec libraries are not present on Vivo OS.
 
 ## Rebuild & Install
 
