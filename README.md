@@ -1,4 +1,4 @@
-# Samsung Camera (S24 Port for Non-Samsung / Vivo X90 Pro, Android 16)
+# Samsung Camera (S24 Port for Non-Samsung / Android 15+)
 
 Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool smali workspace ported to run reliably on non-Samsung Camera2 HALs, tested end-to-end on a Vivo X90 Pro (`MediaTek Dimensity 9200 / MT6985`, Android 16).
 
