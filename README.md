@@ -1,6 +1,6 @@
 # Samsung Camera (S24 Port for Non-Samsung / Android 15+)
 
-[![Beta Testing](https://img.shields.io/badge/🧪%20Beta%20Testing-v1.20%20Universal-0080FF?style=for-the-badge&logo=android)](https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.20-beta)
+[![Latest Release](https://img.shields.io/badge/🚀%20Latest%20Release-v1.22%20Universal-0080FF?style=for-the-badge&logo=android)](https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.22)
 [![GitHub Release](https://img.shields.io/github/v/release/smartworldarafath/Samsung_Camera?style=for-the-badge&color=2ea44f)](https://github.com/smartworldarafath/Samsung_Camera/releases)
 [![Compatibility](https://img.shields.io/badge/Compatibility-Android%2014--16%2B-orange?style=for-the-badge)](https://github.com/smartworldarafath/Samsung_Camera)
 
@@ -8,28 +8,58 @@ Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool sm
 
 ---
 
-## 🧪 Beta Testing Program (Universal Device Testing)
+## 🚀 Latest Version: v1.22 Universal Beta
 
-> [!TIP]
-> **New Universal Beta Available!** We have opened the official **Beta Testing Channel** with **v1.20 Universal Beta**. This build specifically fixes launch crashes on non-flagship devices, tablets (e.g. Xiaomi Pad 7 Pro), and phones with single/dual rear cameras.
+> [!IMPORTANT]
+> **Universal Compatibility Overhaul in v1.22!** This release directly fixes crash loops, cold-boot timeouts, and camera switching bugs reported by the community across **Xiaomi (HyperOS 1 & 2 / MIUI)**, **Google Pixel**, **Nubia / ZTE (MyOS)**, **Realme (Unisoc / MediaTek)**, **OnePlus**, **Oppo**, and **Huawei / Honor** devices.
 
-### 📥 Download Beta Build
-- **Beta Release Page**: [GitHub Pre-release (v1.20-beta)](https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.20-beta)
-- **Direct APK Download**: [Samsung_Camera_OneUI_8.5_Universal_Beta_v1.20.apk](https://github.com/smartworldarafath/Samsung_Camera/releases/download/v1.20-beta/Samsung_Camera_OneUI_8.5_Universal_Beta_v1.20.apk)
-- **Status**: 🟢 Open Public Beta (Testing across Snapdragon, MediaTek, Tensor & Exynos)
-
-### 🎯 What Testers Should Verify:
-1. **Device Launch**: Confirm the app opens without crashing on your device (Xiaomi, Redmi, Poco, Pixel, OnePlus, Motorola, Nothing, Vivo, Realme, Tablets).
-2. **First-Run Permissions**: Verify the permission dialog appears smoothly without crash on clean install.
-3. **Primary Camera**: Confirm photo & video recording work on the main camera.
-4. **Camera Switching**: Test switching between Rear and Front selfie cameras.
-
-### 📝 Submit Beta Test Report
-Please report your testing results via **[🧪 New Beta Test Issue](https://github.com/smartworldarafath/Samsung_Camera/issues/new?template=beta_test_report.md)** with your phone model and Android version!
+### 📥 Download Latest Build
+- **Release Page**: [GitHub Latest Release (v1.22)](https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.22)
+- **Direct APK Download**: [Samsung_Camera_OneUI_8.5_Universal_Beta_v1.22.apk](https://github.com/smartworldarafath/Samsung_Camera/releases/download/v1.22/Samsung_Camera_OneUI_8.5_Universal_Beta_v1.22.apk)
+- **APK Size**: ~67.9 MB (71,253,911 bytes)
+- **Signature Schemes**: Tri-scheme signed (**v1 JAR**, **v2**, and **v3**) with 4-byte zipalign.
 
 ---
 
-## Key Fixes Implemented
+### 🔧 What's Fixed & Added in v1.22
+
+1. **Ultra Wide (`0.6x`) & Telephoto Lens Switching (Xiaomi 13, 14, 15, HyperOS)**:
+   - Fixed `CONFIG_CAMID_BACK_WIDE` returning `0`, which caused switching to `.6x` to default back to the primary sensor.
+   - Added focal-length-based dynamic camera ID mapping (`< 3.0f` for Ultra Wide, `> 6.0f` for Telephoto, `0` for Front) in `SemFrameworkBridge.getSafeCameraId`.
+   - Patched `SemFloatingFeature.getInt` to correctly map wide and telephoto camera IDs on third-party ROMs.
+
+2. **Cold-Boot Timeout Prevention (Realme C53, Unisoc, Budget/Midrange Devices)**:
+   - Patched `LO1/h.smali` (`CountDownLatch` feature loader) to prevent `RuntimeException("Loading for feature is timed out")` on slower chipsets.
+   - Raised timeout safely to 2000ms and wrapped in non-blocking error handling.
+   - Removed strict tag-size aborts in `LO1/f.smali` that previously terminated the app during cold start.
+
+3. **Multi-Vendor Camera Access Guard (Pixel 8, Nubia Neo3 GT, Android 16/17)**:
+   - Replaced re-thrown `CamAccessException` in `CamDeviceManager.smali` and `CameraDeviceManagerImpl.smali` with safe fallback and warning logging.
+   - Guarded `CamCapability$1.smali` against `InvalidOperationException` when querying vendor-specific hardware capabilities.
+   - Suppressed fatal `FINISH_ON_ERROR` exit dialogs in `CameraErrorEventHandler.smali` to avoid forced app closure.
+
+4. **Null Safety in Feature Key-Value Accessors (`LC/e.smali`)**:
+   - Replaced `Objects.requireNonNull` calls with safe default primitives (`0.0f`, `0`, `""`, `false`, `null`), eliminating `NullPointerException` crashes on non-Samsung firmware.
+
+5. **Application Initialization Protection (`CameraApplication.smali`)**:
+   - Guarded `MakerFactory.create()`, `ShortcutUtil`, `SaLogUtil`, and `BixbyExecutor` initializers with global try-catch blocks to prevent startup crashes.
+
+---
+
+### ⚠️ Installation Note for Samsung Galaxy Users
+If you are installing this on a genuine Samsung Galaxy phone:
+- Stock Samsung Camera is signed with Samsung's official private platform key.
+- Custom modded APKs are signed with a standard key, which triggers `INSTALL_FAILED_UPDATE_INCOMPATIBLE` if installed directly over the system camera app.
+- Non-Samsung devices (Xiaomi, Vivo, Oppo, Realme, Pixel, etc.) do NOT have Samsung's stock camera pre-installed, so the package installs cleanly without signature conflict.
+
+---
+
+### 📝 Submit Testing Reports
+If you encounter any issues on your device, please report via **[🧪 New Beta Test Issue](https://github.com/smartworldarafath/Samsung_Camera/issues/new?template=beta_test_report.md)** mentioning your phone model, SoC, and Android version.
+
+---
+
+## Key Architecture & Smali Patches
 
 - **Samsung S24 Ultra Platform & Feature Flags**:
   - [SemFloatingFeature.smali](decompiled/smali_classes5/com/samsung/android/feature/SemFloatingFeature.smali): Rewrote `getBoolean`/`getInt` (fixing 1-arg `getInt` default `0` to prevent `MemoryUtils` level crash) and mapped logical/rear/front camera IDs safely (`0`/`1`).
@@ -61,8 +91,6 @@ Please report your testing results via **[🧪 New Beta Test Issue](https://gith
 - `NIGHT`, `FOOD`, `SLOW MOTION`, `HYPERLAPSE`: Photo/video captures saved & verified with zero crashes.
 - `PANORAMA`, `SINGLE TAKE`, `SUPER SLOW-MO`, `EXPERT RAW`: Launch & preview with zero runtime crashes.
 - `DUAL REC` & `BIXBY VISION`: Present in `MORE`, handled with safe toast fallback on non-Samsung HAL.
-
-> **Hardware / OS notes (unrooted Vivo X90 Pro)**: Vivo's `CameraService` restricts auxiliary physical cameras (`2` Ultrawide, `3` Telephoto, `10` Logical Multi-Cam), `50MP` remosaic streams, and `60fps` normal video vendor tags to Vivo's system-signed stock camera app. Public Camera2 exposes Camera `"0"` (`4096×3072`, `[1.0–10.0x]`, `24/30fps` normal + `120/240/480fps` high-speed) and Camera `"1"` (`3264×2448`, `[1.0–4.0x]`). Samsung proprietary `/vendor/lib64/` native bokeh/ISP/Dual-Rec libraries are not present on Vivo OS.
 
 ## Rebuild & Install
 
