@@ -1,14 +1,67 @@
-# Samsung Camera (S24 Port for Non-Samsung / Android 15+)
+<div align="center" id="overview">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/app-icon.svg"><img src="assets/readme/light/app-icon.svg" alt="Samsung Camera One UI Icon" height="116"></picture>
+  <br/>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/hero-title.svg"><img src="assets/readme/light/hero-title.svg" alt="Samsung Camera (S24 Ultra Port) — v1.22 Universal Beta" width="760"></picture>
+</div>
 
-[![Latest Release](https://img.shields.io/badge/🚀%20Latest%20Release-v1.22%20Universal-0080FF?style=for-the-badge&logo=android)](https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.22)
-[![GitHub Release](https://img.shields.io/github/v/release/smartworldarafath/Samsung_Camera?style=for-the-badge&color=2ea44f)](https://github.com/smartworldarafath/Samsung_Camera/releases)
-[![Compatibility](https://img.shields.io/badge/Compatibility-Android%2014--16%2B-orange?style=for-the-badge)](https://github.com/smartworldarafath/Samsung_Camera)
+<p align="center">
+  <a href="https://github.com/smartworldarafath/Samsung_Camera/releases/download/v1.22/Samsung_Camera_OneUI_8.5_Universal_Beta_v1.22.apk"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/btn-download.svg"><img src="assets/readme/light/btn-download.svg" alt="Download Samsung Camera v1.22 APK" height="52"></picture></a>
+  <a href="https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.22"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/btn-releases.svg"><img src="assets/readme/light/btn-releases.svg" alt="GitHub Latest Release (v1.22)" height="52"></picture></a>
+  <a href="https://github.com/smartworldarafath/Samsung_Camera/issues/new?template=beta_test_report.md"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/btn-issue.svg"><img src="assets/readme/light/btn-issue.svg" alt="Submit Beta Test Issue" height="52"></picture></a>
+  <a href="#key-architecture--smali-patches"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/btn-patches.svg"><img src="assets/readme/light/btn-patches.svg" alt="Architecture &amp; Smali Patches" height="52"></picture></a>
+</p>
 
-Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool smali workspace ported to run reliably on non-Samsung Camera2 HALs, tested end-to-end on a Vivo X90 Pro (`MediaTek Dimensity 9200 / MT6985`, Android 16) and optimized for universal multi-device deployment.
+<p align="center">
+  <a href="https://github.com/smartworldarafath/Samsung_Camera/releases/tag/v1.22"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-release.svg"><img src="assets/readme/light/badge-release.svg" alt="Latest Release v1.22 Universal" height="32"></picture></a>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-oneui.svg"><img src="assets/readme/light/badge-oneui.svg" alt="Base One UI 8.5 S24 Ultra" height="32"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-android.svg"><img src="assets/readme/light/badge-android.svg" alt="Compatibility Android 14–16+" height="32"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-signing.svg"><img src="assets/readme/light/badge-signing.svg" alt="Tri-Scheme v1/v2/v3 Signed" height="32"></picture>
+  <a href="#key-architecture--smali-patches"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-zoom.svg"><img src="assets/readme/light/badge-zoom.svg" alt="0.6x–100x Zoom" height="32"></picture></a>
+  <a href="#whats-fixed--added-in-v122"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-hal.svg"><img src="assets/readme/light/badge-hal.svg" alt="Multi-HAL Guard" height="32"></picture></a>
+  <a href="#verified-modes-vivo-x90-pro-android-16"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/badge-modes.svg"><img src="assets/readme/light/badge-modes.svg" alt="13 MORE Modes" height="32"></picture></a>
+</p>
+
+<p align="center">
+  <a href="#latest-version-v122-universal-beta"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/tab-overview.svg"><img src="assets/readme/light/tab-overview.svg" alt="v1.22 Release" height="34"></picture></a>
+  <a href="#whats-fixed--added-in-v122"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/tab-fixes.svg"><img src="assets/readme/light/tab-fixes.svg" alt="Fixes &amp; Overhaul" height="34"></picture></a>
+  <a href="#installation-note-for-samsung-galaxy-users"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/tab-galaxy.svg"><img src="assets/readme/light/tab-galaxy.svg" alt="Galaxy Note" height="34"></picture></a>
+  <a href="#key-architecture--smali-patches"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/tab-architecture.svg"><img src="assets/readme/light/tab-architecture.svg" alt="Smali Patches" height="34"></picture></a>
+  <a href="#verified-modes-vivo-x90-pro-android-16"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/tab-verified.svg"><img src="assets/readme/light/tab-verified.svg" alt="Verified Modes" height="34"></picture></a>
+  <a href="#rebuild--install"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/tab-rebuild.svg"><img src="assets/readme/light/tab-rebuild.svg" alt="Rebuild &amp; Install" height="34"></picture></a>
+</p>
 
 ---
 
-## 🚀 Latest Version: v1.22 Universal Beta
+Patched APK(`com.sec.android.app.camera`, S24 Ultra feature set) and apktool smali workspace ported to run reliably on non-Samsung Camera2 HALs, tested end-to-end on a Vivo X90 Pro (`MediaTek Dimensity 9200 / MT6985`, Android 16) and optimized for universal multi-device deployment.
+
+<h2 id="latest-version-v122-universal-beta"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="assets/readme/dark/hm-latest.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/h-latest.svg"><source media="(max-width: 640px)" srcset="assets/readme/light/hm-latest.svg"><img src="assets/readme/light/h-latest.svg" alt="Latest Version: v1.22 Universal Beta" width="100%"></picture></h2>
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/card-lenses.svg"><img src="assets/readme/light/card-lenses.svg" alt="0.6x Ultra Wide &amp; Telephoto" width="100%"></picture>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/card-coldboot.svg"><img src="assets/readme/light/card-coldboot.svg" alt="2000ms Cold-Boot Guard" width="100%"></picture>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/card-halguard.svg"><img src="assets/readme/light/card-halguard.svg" alt="Multi-Vendor Camera2 Guard" width="100%"></picture>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/card-highres.svg"><img src="assets/readme/light/card-highres.svg" alt="24M / 50M / 200M &amp; 100x Zoom" width="100%"></picture>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/card-portrait.svg"><img src="assets/readme/light/card-portrait.svg" alt="Portrait &amp; Pro Lens Menus" width="100%"></picture>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <picture><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/card-moremodes.svg"><img src="assets/readme/light/card-moremodes.svg" alt="All 13 S24U MORE Modes" width="100%"></picture>
+    </td>
+  </tr>
+</table>
 
 > [!IMPORTANT]
 > **Universal Compatibility Overhaul in v1.22!** This release directly fixes crash loops, cold-boot timeouts, and camera switching bugs reported by the community across **Xiaomi (HyperOS 1 & 2 / MIUI)**, **Google Pixel**, **Nubia / ZTE (MyOS)**, **Realme (Unisoc / MediaTek)**, **OnePlus**, **Oppo**, and **Huawei / Honor** devices.
@@ -21,7 +74,7 @@ Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool sm
 
 ---
 
-### 🔧 What's Fixed & Added in v1.22
+<h2 id="whats-fixed--added-in-v122"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="assets/readme/dark/hm-fixes.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/h-fixes.svg"><source media="(max-width: 640px)" srcset="assets/readme/light/hm-fixes.svg"><img src="assets/readme/light/h-fixes.svg" alt="What's Fixed &amp; Added in v1.22" width="100%"></picture></h2>
 
 1. **Ultra Wide (`0.6x`) & Telephoto Lens Switching (Xiaomi 13, 14, 15, HyperOS)**:
    - Fixed `CONFIG_CAMID_BACK_WIDE` returning `0`, which caused switching to `.6x` to default back to the primary sensor.
@@ -46,7 +99,8 @@ Patched APK (`com.sec.android.app.camera`, S24 Ultra feature set) and apktool sm
 
 ---
 
-### ⚠️ Installation Note for Samsung Galaxy Users
+<h2 id="installation-note-for-samsung-galaxy-users"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="assets/readme/dark/hm-galaxy.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/h-galaxy.svg"><source media="(max-width: 640px)" srcset="assets/readme/light/hm-galaxy.svg"><img src="assets/readme/light/h-galaxy.svg" alt="Installation Note for Samsung Galaxy Users" width="100%"></picture></h2>
+
 If you are installing this on a genuine Samsung Galaxy phone:
 - Stock Samsung Camera is signed with Samsung's official private platform key.
 - Custom modded APKs are signed with a standard key, which triggers `INSTALL_FAILED_UPDATE_INCOMPATIBLE` if installed directly over the system camera app.
@@ -59,7 +113,7 @@ If you encounter any issues on your device, please report via **[🧪 New Beta T
 
 ---
 
-## Key Architecture & Smali Patches
+<h2 id="key-architecture--smali-patches"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="assets/readme/dark/hm-architecture.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/h-architecture.svg"><source media="(max-width: 640px)" srcset="assets/readme/light/hm-architecture.svg"><img src="assets/readme/light/h-architecture.svg" alt="Key Architecture &amp; Smali Patches" width="100%"></picture></h2>
 
 - **Samsung S24 Ultra Platform & Feature Flags**:
   - [SemFloatingFeature.smali](decompiled/smali_classes5/com/samsung/android/feature/SemFloatingFeature.smali): Rewrote `getBoolean`/`getInt` (fixing 1-arg `getInt` default `0` to prevent `MemoryUtils` level crash) and mapped logical/rear/front camera IDs safely (`0`/`1`).
@@ -82,7 +136,9 @@ If you encounter any issues on your device, please report via **[🧪 New Beta T
 - **Panorama, Food & Slow Motion**:
   - [NativeNode.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/node/NativeNode.smali), [ExifManageNode.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/node/ExifManageNode.smali), [MakerConnectionInfo.smali](decompiled/smali_classes4/com/sec/android/app/camera/engine/core/request/MakerConnectionInfo.smali), [FeatureCapability.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/local/capability/FeatureCapability.smali), & [SlowMotionVideoMakerBase.smali](decompiled/smali_classes3/com/samsung/android/camera/core2/maker/SlowMotionVideoMakerBase.smali): Non-Samsung HAL compatibility and MTK `SMVRBatch` high-speed fixes.
 
-## Verified Modes (Vivo X90 Pro, Android 16)
+---
+
+<h2 id="verified-modes-vivo-x90-pro-android-16"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="assets/readme/dark/hm-verified.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/h-verified.svg"><source media="(max-width: 640px)" srcset="assets/readme/light/hm-verified.svg"><img src="assets/readme/light/h-verified.svg" alt="Verified Modes (Vivo X90 Pro, Android 16)" width="100%"></picture></h2>
 
 - `PHOTO`: `.6x`–`100x` zoom (live + cropped JPEG beyond `10x`), `1:1`/`4:3`/`16:9`/`Full` ratios, `12M`/`24M`/`50M`/`200M` rear & `50M` front captures verified.
 - `PORTRAIT` & `PORTRAIT VIDEO`: `1x`/`2x`/`3x`/`5x` focal lengths, clean S24 Ultra effect toggle UI, photo & `.mp4` captures verified.
@@ -92,7 +148,9 @@ If you encounter any issues on your device, please report via **[🧪 New Beta T
 - `PANORAMA`, `SINGLE TAKE`, `SUPER SLOW-MO`, `EXPERT RAW`: Launch & preview with zero runtime crashes.
 - `DUAL REC` & `BIXBY VISION`: Present in `MORE`, handled with safe toast fallback on non-Samsung HAL.
 
-## Rebuild & Install
+---
+
+<h2 id="rebuild--install"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="assets/readme/dark/hm-rebuild.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/readme/dark/h-rebuild.svg"><source media="(max-width: 640px)" srcset="assets/readme/light/hm-rebuild.svg"><img src="assets/readme/light/h-rebuild.svg" alt="Rebuild &amp; Install" width="100%"></picture></h2>
 
 ```bash
 python scripts/build_and_install.py --install
